@@ -9,9 +9,7 @@ int l[MAX_N]; //log[MAX_N]
 int query(int L, int R)
 {
     int len = R-L+1;
-    int k = 0;
-    while((1 << (k+1)) <= len) k++;
-
+    int k = l[len];
     return min(m[L][k],m[R-(1<<k)+1][k]);
 }
 
