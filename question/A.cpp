@@ -22,35 +22,45 @@ using namespace std;
 /**********************************************************/
 const int INF = 1e17;
 const int NINF = -INF;
+const int N = 1e8;
 /**********************************************************/
 
-int dfs(int node, vv(int)&adj, V(int) &dis)
+class Solution
 {
-    if(dis[node] != -1) return dis[node];
-    int sum = 0;
-    for(auto it:adj[node])
+    public:
+    void solve()
     {
-        sum = max(sum,dfs(it,adj,dis));
+        int n,m;
+        cin >> n >> m;
+        for(int i = n; i <= m; i++) if(isPrime(i)) cout << i << " " << endl;
     }
-    return dis[node] = 1+sum;
-}
-
+    bool isPrime(int n)
+    {
+        // Corner case
+        if (n <= 1)
+            return false;
+     
+        // Check from 2 to square root of n
+        for (int i = 2; i <= sqrt(n); i++)
+            if (n % i == 0)
+                return false;
+     
+        return true;
+    }
+};
 signed main()
 {
-    int n,m;
-    cin >> n >> m;
-    vv(int) adj(n+1);
-    fi(i,0,m)
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif
+
+    int t;
+    cin >> t;
+    while(t--)
     {
-        int x,y;
-        cin >> x >> y;
-        adj[x].pb(y);
+        Solution s;
+        s.solve();
+        cout << endl;
     }
-    V(int) dis(n+1,-1);
-    int ans = 0;
-    fi(i,1,n+1)
-    {
-        ans = max(ans,dfs(i,adj,dis));
-    }
-    cout << ans-1 << endl;
 }
