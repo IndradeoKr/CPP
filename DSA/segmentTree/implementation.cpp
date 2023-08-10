@@ -64,7 +64,7 @@ void pointUpdate(int ind, int low, int high, int node, int val)
 {
     if(low == high)
     {
-        seg[ind] += val;
+        seg[ind] = val;
     }
     else
     {
@@ -132,7 +132,7 @@ int main()
         cin >> l >> r;
         cout << query(0,0,n-1,l,r) << endl;//(index,low,high,l,r);
         int p,val;
-        cout << "Enter a point where you want to add number and how much: ";
+        // cout << "Enter a point where you want to add number and how much: ";
         cin >> p >> val;
         pointUpdate(0,0,n-1,p,val);
     }
