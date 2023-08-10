@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 using namespace std;
  
+/* Template */
+template<class T>  using indexed_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
+
+
 /*macro function*/
 #define all(x) x.begin(), x.end()
 #define int long long int
@@ -30,22 +37,23 @@ class Solution
     public:
     void solve()
     {
-        int n,m;
-        cin >> n >> m;
-        for(int i = n; i <= m; i++) if(isPrime(i)) cout << i << " " << endl;
-    }
-    bool isPrime(int n)
-    {
-        // Corner case
-        if (n <= 1)
-            return false;
-     
-        // Check from 2 to square root of n
-        for (int i = 2; i <= sqrt(n); i++)
-            if (n % i == 0)
-                return false;
-     
-        return true;
+        int n;
+        cin >> n;
+        indexed_set<int> s;
+        for(int i = 0; i < n; i++)
+        {
+            int x;
+            cin >> x;
+            s.insert(x);
+        }
+        cout << "S = ";
+        for(auto it:s) cout << it << " ";
+        cout << endl;
+        auto it = s.find_by_order(2);
+        cout << *it << endl;
+
+        int cnt = s.order_of_key(24);
+        cout << cnt << endl;
     }
 };
 signed main()
@@ -55,8 +63,8 @@ signed main()
         freopen("output.txt","w",stdout);
     #endif
 
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t--)
     {
         Solution s;
