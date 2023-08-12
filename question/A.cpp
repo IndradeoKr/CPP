@@ -5,8 +5,8 @@ using namespace __gnu_pbds;
 using namespace std;
  
 /* Template */
-template<class T>  using indexed_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
-
+template<class T>  using indexed_set = tree<T,null_type,greater<T>,rb_tree_tag,tree_order_statistics_node_update>;
+/**********************************************************/
 
 /*macro function*/
 #define all(x) x.begin(), x.end()
@@ -30,29 +30,31 @@ template<class T>  using indexed_set = tree<T,null_type,less<T>,rb_tree_tag,tree
 const int INF = 1e17;
 const int NINF = -INF;
 const int N = 1e8;
+const int mod = 1e9+7;
 /**********************************************************/
 
 class Solution
 {
-    public:
+public:
     void solve()
     {
-        int n;
-        cin >> n;
+        int n; cin >> n;
         indexed_set<int> s;
         for(int i = 0; i < n; i++)
         {
-            int x;
-            cin >> x;
+            int x; cin >> x;
             s.insert(x);
         }
-        cout << "S = ";
-        for(auto it:s) cout << it << " ";
-        cout << endl;
-        auto it = s.find_by_order(2);
-        cout << *it << endl;
 
-        int cnt = s.order_of_key(24);
+        int cnt = 0;
+        while(!s.empty())
+        {
+            int cur = *s.find_by_order(0);
+            s.erase(cur);
+            if(cur%2 == 1) continue;
+            cnt++;
+            s.insert(cur/2);
+        }
         cout << cnt << endl;
     }
 };
@@ -63,12 +65,11 @@ signed main()
         freopen("output.txt","w",stdout);
     #endif
 
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t--)
     {
         Solution s;
         s.solve();
-        cout << endl;
     }
 }

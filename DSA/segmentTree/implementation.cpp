@@ -19,7 +19,7 @@ void build(int ind, int low, int high)
     build(2*ind+1,low,mid);
     build(2*ind+2,mid+1,high);
     /* Backtracking will store the max value from left and right to the node */
-    seg[ind] = max(seg[2*ind+1],seg[2*ind+2]);
+    seg[ind] = min(seg[2*ind+1],seg[2*ind+2]);
 }
 
 int query(int ind, int low, int high, int l, int r)//(ind,low,high,left,right)
@@ -45,11 +45,13 @@ int query(int ind, int low, int high, int l, int r)//(ind,low,high,left,right)
 
     if(l <= low && high <= r)//completely lies inside the array
     {
+        //[l, low, high, r]
         return seg[ind];
     }
 
     if(high < l || low > r)//does not lies inside the loop
     {
+        //[l, r, low, high] or [low, high, l, r]
         return INT_MIN; //because we are finding the maxmium value;
     }
 
@@ -57,7 +59,7 @@ int query(int ind, int low, int high, int l, int r)//(ind,low,high,left,right)
     int mid = low + (high-low)/2;
     int left = query(2*ind+1,low,mid,l,r);
     int right = query(2*ind+2,mid+1,high,l,r);
-    return max(left,right);
+    return min(left,right);
 }
 
 void pointUpdate(int ind, int low, int high, int node, int val)
@@ -77,7 +79,7 @@ void pointUpdate(int ind, int low, int high, int node, int val)
         {
             pointUpdate(2*ind+2,mid+1,high,node,val);
         }
-        seg[ind] = max(seg[2*ind+1],seg[2*ind+2]);
+        seg[ind] = min(seg[2*ind+1],seg[2*ind+2]);
     }
 }
 
