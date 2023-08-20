@@ -7,7 +7,7 @@ using namespace std;
 /* Template */
 template<class T>  using indexed_set = tree<T,null_type,greater<T>,rb_tree_tag,tree_order_statistics_node_update>;
 /**********************************************************/
-
+ 
 /*macro function*/
 #define all(x) x.begin(), x.end()
 #define int long long int
@@ -33,42 +33,41 @@ const int N = 1e8;
 const int mod = 1e9+7;
 /**********************************************************/
 
-class Solution
-{
+class Solution{
+    int dp[1001001];
+    int n;
 public:
-    void solve()
-    {
-        int n; cin >> n;
-        indexed_set<int> s;
-        for(int i = 0; i < n; i++)
-        {
-            int x; cin >> x;
-            s.insert(x);
+    void solve(){
+        cin >> n;
+        memset(dp,-1,sizeof(dp));
+
+        cout << rec(1) << endl;
+    }
+
+    int rec(int level){
+        if(level == n) return 1;
+        if(dp[level] != -1) return dp[level];
+
+        int ans = 0;
+        for(int i = 1; i <= 3; i++){
+            if(level+i <= n) (ans += rec(level+i)) %= mod;
         }
 
-        int cnt = 0;
-        while(!s.empty())
-        {
-            int cur = *s.find_by_order(0);
-            s.erase(cur);
-            if(cur%2 == 1) continue;
-            cnt++;
-            s.insert(cur/2);
-        }
-        cout << cnt << endl;
+        return dp[level] = ans%mod;
     }
 };
-signed main()
-{
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt","r",stdin);
-        freopen("output.txt","w",stdout);
-    #endif
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0);
 
-    int t;
-    cin >> t;
-    while(t--)
-    {
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt","r",stdin);
+    //     freopen("output.txt","w",stdout);
+    // #endif
+        
+    int t = 1;
+    // cin >> t;
+    while(t--){
         Solution s;
         s.solve();
     }
